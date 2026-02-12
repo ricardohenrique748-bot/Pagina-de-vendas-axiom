@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { supabase } from '../services/supabase';
 
 interface AuditModalProps {
   onClose: () => void;
@@ -11,12 +12,26 @@ const AuditModal: React.FC<AuditModalProps> = ({ onClose }) => {
   const [loading, setLoading] = useState(false);
   const [showDemo, setShowDemo] = useState(false);
 
-  const handleGenerate = (e: React.FormEvent) => {
+  const handleGenerate = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!companyName || !appDescription) return;
 
     setLoading(true);
-    // Simulating AI Generation
+
+    // Save lead to Supabase
+    try {
+      const { error } = await supabase
+        .from('prototypes')
+        .insert([{ company_name: companyName, app_description: appDescription }]);
+
+      if (error) {
+        console.error('Error saving lead:', error);
+      }
+    } catch (err) {
+      console.error('Unexpected error:', err);
+    }
+
+    // Continue with the UI simulation
     setTimeout(() => {
       setLoading(false);
       setShowDemo(true);
