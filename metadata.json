@@ -1,0 +1,8 @@
+{
+  "name": "DesignStrat AI - Premium Design Agency",
+  "description": "A high-conversion design agency landing page with integrated AI website auditing powered by Gemini.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
